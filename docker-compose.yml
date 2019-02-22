@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  web:
+    build: ./web
+    environment:
+      - APACHE_RUN_USER=#1000
+    volumes:
+      - ./course:/var/www/html/
+    ports:
+      - 8080:80
+    restart: always
+    depends_on:
+      - postgres
+    working_dir: /var/www/html/
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 6080:8080
+    links:
+      - postgres:postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:10
+    restart: always
+    environment:
+      POSTGRES_DB: course
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+
+  composer:
+    image: composer:1.6
+    volumes:
+      - ./course:/var/www/html/
+    working_dir: /var/www/html/
+#    command: composer install
