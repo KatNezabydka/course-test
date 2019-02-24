@@ -11,6 +11,16 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
 
+# ####################################
+# Exif:
+# ######### ###########################
+
+ARG INSTALL_EXIF = false
+RUN if [ $ {INSTALL_EXIF}  =  true ] ;  then \
+     # Включить требования Exif для расширений PHP
+    docker-php-ext-install exif && \
+    docker-php-ext-enable exif \
+
 # Install composer
 RUN COMPOSER_HOME=/usr/local/composer curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
