@@ -12,7 +12,9 @@ class Step1Controller extends Controller
     public function index()
     {
         $student = Student::where('email', Session::get('email'))->first();
-        return view('step-1', compact('student'));
+        if ($student->step_1) return redirect()->route('step-2');
+        else
+            return view('step-1', compact('student'));
     }
 
     public function store(Request $request)

@@ -22,9 +22,7 @@ class CreateStudentsTable extends Migration
             $table->boolean('step_2')->default(false);
             $table->boolean('step_3')->default(false);
             $table->boolean('step_4')->default(false);
-            $table->time('time')->nullable();
-
-
+            
             $table->timestamps();
         });
     }

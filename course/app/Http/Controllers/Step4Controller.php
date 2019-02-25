@@ -9,17 +9,23 @@ use Carbon\Carbon;
 
 class Step4Controller extends Controller
 {
-    public function index(Request $request)
+
+
+    public function index()
     {
-        $weeks = [
-            1 => 'Понедельник',
-            2 => 'Вторник',
-            3 => 'Среда',
-            4 => 'Четверг',
-            5 => 'Пятница',
-            6 => 'Суббота',
-            0 => 'Воскресенье',];
-        return view('step-4', compact('weeks'));
+        $student = Student::where('email', Session::get('email'))->first();
+        if ($student->step_4) return redirect()->route('finish');
+        else {
+            $weeks = [
+                1 => 'Понедельник',
+                2 => 'Вторник',
+                3 => 'Среда',
+                4 => 'Четверг',
+                5 => 'Пятница',
+                6 => 'Суббота',
+                0 => 'Воскресенье',];
+            return view('step-4', compact('weeks'));
+        }
     }
 
     public function store(Request $request)
@@ -30,10 +36,6 @@ class Step4Controller extends Controller
             $data['point'] = $student->point + 1;
         $data['step_4'] = true;
 
-//        $start = $student->created_at;
-//        $end = $student->updated_at;
-//        $difference = $start->diff($end);
-//        dd($difference);
         $student->update($data);
         if ($student) {
             return redirect()->route('finish');

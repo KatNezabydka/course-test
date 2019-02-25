@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\Session;
 
 class Step3Controller extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        return view('step-3');
+        $student = Student::where('email', Session::get('email'))->first();
+        if ($student->step_3) return redirect()->route('step-4');
+        else {
+            return view('step-3');
+        }
     }
 
     public function store(Request $request)

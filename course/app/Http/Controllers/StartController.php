@@ -34,6 +34,11 @@ class StartController extends Controller
                     return redirect()->back()->withErrors(['image' => $image['status']]);
                 }
             }
+            $data['point'] = 0;
+            $data['step_1'] = 0;
+            $data['step_2'] = 0;
+            $data['step_3'] = 0;
+            $data['step_4'] = 0;
             $data['created_at'] = Carbon::now();
             $data['updated_at'] = Carbon::now();
             $student->update($data);

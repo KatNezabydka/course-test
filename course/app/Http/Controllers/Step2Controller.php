@@ -9,12 +9,15 @@ use Illuminate\Support\Facades\Validator;
 
 class Step2Controller extends Controller
 {
-    public function index (Request $request)
+    public function index()
     {
         $student = Student::where('email', Session::get('email'))->first();
-        $val_1 = rand(10,99);
-        $val_2 = rand(10,99);
-        return view('step-2', compact('student', 'val_1', 'val_2'));
+        if ($student->step_2) return redirect()->route('step-3');
+        else {
+            $val_1 = rand(10, 99);
+            $val_2 = rand(10, 99);
+            return view('step-2', compact('student', 'val_1', 'val_2'));
+        }
     }
 
     public function store(Request $request)
@@ -36,8 +39,7 @@ class Step2Controller extends Controller
         $student->update($data);
         if ($student) {
             return redirect()->route('step-3');
-        }
-        else
+        } else
             return redirect()->back()->with('error', ['Ошибка, обратитесь к администратору']);
     }
 }

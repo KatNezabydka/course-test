@@ -24,7 +24,8 @@ class Student extends Model
         'step_2',
         'step_3',
         'step_4',
-        'time',
+        'created_at',
+        'updated_at',
     ];
 
     public static function UploadAvatar($image)
