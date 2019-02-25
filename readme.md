@@ -6,5 +6,5 @@
 3) <code>docker-compose exec web bash</code>
 4) <code>php artisan key:generate</code>
 5) <code>php artisan migrate</code>
-) <code>php artisan storage:link</code>
+6) <code>php artisan storage:link</code>
 
