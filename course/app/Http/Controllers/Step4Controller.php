@@ -29,9 +29,13 @@ class Step4Controller extends Controller
         if ($request->day == $today)
             $data['point'] = $student->point + 1;
         $data['step_4'] = true;
+
+//        $start = $student->created_at;
+//        $end = $student->updated_at;
+//        $difference = $start->diff($end);
+//        dd($difference);
         $student->update($data);
         if ($student) {
-            Session::flash('success', 'Шаг успешно пройден');
             return redirect()->route('finish');
         } else
             return redirect()->back()->with('error', ['Что-то пошло не так :(']);

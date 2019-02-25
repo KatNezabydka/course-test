@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class Step2Controller extends Controller
 {
@@ -19,7 +20,16 @@ class Step2Controller extends Controller
     public function store(Request $request)
     {
         $student = Student::where('email', Session::get('email'))->first();
-        
+
+        $validator = Validator::make($request->all(), [
+            'result' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator);
+        }
+
         $res = (int)$request->val_1 + (int)$request->val_2;
         if ($res == $request->result) $data['point'] = $student->point + 1;
         $data['step_2'] = true;

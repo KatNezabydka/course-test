@@ -20,10 +20,10 @@ class Student extends Model
         'email',
         'avatar',
         'point',
-        'step-1',
-        'step-2',
-        'step-3',
-        'step-4',
+        'step_1',
+        'step_2',
+        'step_3',
+        'step_4',
         'time',
     ];
 

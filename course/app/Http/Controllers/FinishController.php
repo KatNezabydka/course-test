@@ -11,12 +11,10 @@ class FinishController extends Controller
     public function index()
     {
         $student = Student::where('email', Session::get('email'))->first();
-        return view('finish', compact('student'));
+        $start = $student->created_at;
+        $end = $student->updated_at;
+        $time = $start->diffInSeconds($end);
+        return view('finish', compact('student', 'time'));
     }
-
-    public function store(Request $request)
-    {
-
-        dd($request);
-    }
+    
 }

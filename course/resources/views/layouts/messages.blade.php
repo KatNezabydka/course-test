@@ -11,7 +11,7 @@
         </div>
     </div>
 @endif
-@if (\Session::has('errors'))
+@if (\Session::has('error'))
     <div class="alert alert-danger text-center">{{\Session::get('error')}}</div>
 @endif
 @if (\Session::has('success'))

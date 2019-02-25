@@ -23,6 +23,32 @@
                     <button type="submit" class="btn btn-primary" onClick="startClock()">Next</button>
                 </form>
 
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Баллы</th>
+                        <th scope="col">Время, с</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($students as $key => $student)
+                    <tr>
+                        <th scope="row">{{ $key + 1 }}</th>
+                        <td>{{ $student->email ?? '' }}</td>
+                        <td>{{ $student->point ?? '' }}</td>
+                        <td>@if (isset($student->created_at) && isset($student->updated_at))
+                            {{ $student->updated_at->diffInSeconds($student->created_at) }}
+                            @endif</td>
+                        {{--<td>@mdo</td>--}}
+                    </tr>
+                    @empty
+                        <tr>
+                            <td>Данные отсутствуют</td>
+                        </tr>
+                    @endforelse
+
             </div>
         </div>
     </div>
