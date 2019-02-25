@@ -41,4 +41,4 @@ services:
     volumes:
       - ./course:/var/www/html/
     working_dir: /var/www/html/
-#    command: composer install
+    command: composer install
