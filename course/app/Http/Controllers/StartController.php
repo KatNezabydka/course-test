@@ -12,21 +12,28 @@ use Illuminate\Support\Facades\Validator;
 
 class StartController extends Controller
 {
+    protected $student;
+    
+    public function __construct()
+    {
+        $this->student = Session::get('student');
+    }
 
     public function index()
     {
-        Session::forget('email');
         $students = Student::orderBy('created_at', 'desc')->take(10)->get();
+        Session::forget('student');
         return view('index', compact('students'));
     }
 
+
     public function store(Request $request)
     {
-        $student = Student::where('email', $request->email)->first();
-        if ($student) {
+        $this->student = Student::where('email', $request->email)->first();
+        if ($this->student) {
 
             if (Input::has('avatar')) {
-                if (isset($student->avatar)) Storage::disk('upload')->delete($student->avatar);
+                if (isset($this->student->avatar)) Storage::disk('upload')->delete($this->student->avatar);
                 $image = Student::UploadAvatar(Input::file('avatar'));
                 if ($image['status'] === true) {
                     $data['avatar'] = $image['fullFileName'];
@@ -41,9 +48,9 @@ class StartController extends Controller
             $data['step_4'] = 0;
             $data['created_at'] = Carbon::now();
             $data['updated_at'] = Carbon::now();
-            $student->update($data);
-            Session::put('email', $student->email);
-            
+            $this->student->update($data);
+            Session::put('student', $this->student);
+
             return redirect()->route('step-1');
         } else {
 
@@ -68,10 +75,9 @@ class StartController extends Controller
                 }
             }
 
-            $student = Student::create($data);
-            if ($student) {
-
-                Session::put('email', $data['email']);
+            $this->student = Student::create($data);
+            if ($this->student) {
+                Session::put('student', $this->student);
                 return redirect()->route('step-1');
             } else
                 return redirect()->back()->with('error', ['Ошибка, обратитесь к администратору']);
@@ -79,5 +85,6 @@ class StartController extends Controller
         }
 
     }
+
 
 }

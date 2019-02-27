@@ -11,7 +11,7 @@
             <div class="form-group">
                 <div class="form-group center text-center">
                     <h2>Какие языки программирования ты знаешь?</h2>
-                    <div class="bg">
+                    <div class="bg ">
                         <div>
                             <div class="chiller_cb">
                                 <input id="myCheckbox" type="checkbox" name="php">
@@ -46,7 +46,6 @@
         </form>
 
     </div>
-
 
 @endsection
 

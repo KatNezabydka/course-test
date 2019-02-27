@@ -7,12 +7,11 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <h1 class="text-center">Start page</h1>
-
                 @include('layouts.messages')
                 <form action="{{ route('start.store') }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <input type="email" name="email" class="form-control" id="exampleInputEmail1"
+                        <input type="email" name="email" class="form-control"
                                aria-describedby="emailHelp" placeholder="Enter email" value="{{ old('name') ?? '' }}">
                     </div>
 
@@ -22,7 +21,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary" onClick="startClock()">Next</button>
                 </form>
-
+                <br>
                 <table class="table">
                     <thead>
                     <tr>
@@ -34,20 +33,20 @@
                     </thead>
                     <tbody>
                     @forelse($students as $key => $student)
-                    <tr>
-                        <th scope="row">{{ $key + 1 }}</th>
-                        <td>{{ $student->email ?? '' }}</td>
-                        <td>{{ $student->point ?? '' }}</td>
-                        <td>@if (isset($student->created_at) && isset($student->updated_at))
-                            {{ $student->updated_at->diffInSeconds($student->created_at) }}
-                            @endif</td>
-                        {{--<td>@mdo</td>--}}
-                    </tr>
+                        <tr>
+                            <th scope="row">{{ $key + 1 }}</th>
+                            <td>{{ $student->email ?? '' }}</td>
+                            <td>{{ $student->point ?? '' }}</td>
+                            <td>@if (isset($student->created_at) && isset($student->updated_at))
+                                    {{ $student->updated_at->diffInSeconds($student->created_at) }}
+                                @endif</td>
+                            {{--<td>@mdo</td>--}}
+                        </tr>
                     @empty
                         <tr>
                             <td>Данные отсутствуют</td>
                         </tr>
-                    @endforelse
+                @endforelse
 
             </div>
         </div>

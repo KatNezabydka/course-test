@@ -42,7 +42,7 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        {{ Session::get('email') }}
+                        {{ Session::get('student.email') }}
                     </li>
                 </ul>
             </div>

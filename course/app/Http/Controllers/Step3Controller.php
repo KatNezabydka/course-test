@@ -6,12 +6,18 @@ use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class Step3Controller extends Controller
+class Step3Controller extends StartController
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     public function index()
     {
         $student = Student::where('email', Session::get('email'))->first();
-        if ($student->step_3) return redirect()->route('step-4');
+        if ($this->student->step_3) return redirect()->route('step-4');
         else {
             return view('step-3');
         }
@@ -19,15 +25,14 @@ class Step3Controller extends Controller
 
     public function store(Request $request)
     {
-        $student = Student::where('email', Session::get('email'))->first();
         $data = [];
         $count = count($request->except('_token', '_method', 'basic'));
         if (($count > 0) && (!$request->only('basic'))) {
-            $data['point'] = $student->point + 1;
+            $data['point'] = $this->student->point + 1;
         }
         $data['step_3'] = true;
-        $student->update($data);
-        if ($student) {
+        $this->student->update($data);
+        if ($this->student) {
             return redirect()->route('step-4');
         } else
             return redirect()->back()->with('error', ['Что-то пошло не так :(']);

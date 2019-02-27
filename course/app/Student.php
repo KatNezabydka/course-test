@@ -12,7 +12,6 @@ use Intervention\Image\Constraint;
 class Student extends Model
 
 {
-//    use Notifiable;
 
     protected $table = 'students';
 

@@ -1,15 +1,9 @@
 @if ($errors->any())
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    </div>
+    <ul class="alert alert-danger">
+        @foreach ($errors->all() as $error)
+            <li class="text-center">{{ $error }}</li>
+        @endforeach
+    </ul>
 @endif
 @if (\Session::has('error'))
     <div class="alert alert-danger text-center">{{\Session::get('error')}}</div>

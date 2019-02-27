@@ -10,19 +10,16 @@
             {{ csrf_field() }}
             <div class="form-group">
                 <div class="form-group center text-center">
-                    <span>{{ $val_1 }}</span> + <span>{{ $val_2 }}</span>
-                    <input type="text" name="result">
+                    <div>{{ $val_1 }} + {{ $val_2 }}</div>
+                    <input type="text" name="result" class="col-md-1">
                     <input type="hidden" name="val_1" value="{{ $val_1 }}">
                     <input type="hidden" name="val_2" value="{{ $val_2 }}">
-
-
                 </div>
             </div>
             <button type="submit" class="btn btn-primary ">Next</button>
         </form>
 
     </div>
-
 
 @endsection
 
