@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Student;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
 class Step4Controller extends StartController
@@ -15,22 +13,26 @@ class Step4Controller extends StartController
         parent::__construct();
     }
 
+    /**
+     * @return mixed
+     */
     public function index()
     {
-        if ($this->student->step_4) return redirect()->route('finish');
-        else {
-            $weeks = [
-                1 => 'Понедельник',
-                2 => 'Вторник',
-                3 => 'Среда',
-                4 => 'Четверг',
-                5 => 'Пятница',
-                6 => 'Суббота',
-                0 => 'Воскресенье',];
-            return view('step-4', compact('weeks'));
-        }
+        $weeks = [
+            1 => 'Понедельник',
+            2 => 'Вторник',
+            3 => 'Среда',
+            4 => 'Четверг',
+            5 => 'Пятница',
+            6 => 'Суббота',
+            0 => 'Воскресенье',];
+        return ($this->student->step_4) ? redirect()->route('finish') : view('step-4', compact('weeks'));
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function store(Request $request)
     {
         $today = Carbon::now()->dayOfWeek;
@@ -39,11 +41,7 @@ class Step4Controller extends StartController
         $data['step_4'] = true;
 
         $this->student->update($data);
-        if ($this->student) {
-            return redirect()->route('finish');
-        } else
-            return redirect()->back()->with('error', ['Что-то пошло не так :(']);
-
-
+        return ($this->student) ? redirect()->route('finish') : redirect()->back()->with('error', ['Что-то пошло не так :(']);
+        
     }
 }

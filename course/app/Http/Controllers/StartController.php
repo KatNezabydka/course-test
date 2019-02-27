@@ -10,15 +10,20 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+
 class StartController extends Controller
 {
+
     protected $student;
-    
+
     public function __construct()
     {
         $this->student = Session::get('student');
     }
 
+    /**
+     * @return mixed
+     */
     public function index()
     {
         $students = Student::orderBy('created_at', 'desc')->take(10)->get();
@@ -26,7 +31,10 @@ class StartController extends Controller
         return view('index', compact('students'));
     }
 
-
+    /**
+     * @param Request $request
+     * @return $this
+     */
     public function store(Request $request)
     {
         $this->student = Student::where('email', $request->email)->first();
@@ -35,7 +43,7 @@ class StartController extends Controller
             if (Input::has('avatar')) {
                 if (isset($this->student->avatar)) Storage::disk('upload')->delete($this->student->avatar);
                 $image = Student::UploadAvatar(Input::file('avatar'));
-                if ($image['status'] === true) {
+                if ($image['status']) {
                     $data['avatar'] = $image['fullFileName'];
                 } else {
                     return redirect()->back()->withErrors(['image' => $image['status']]);
@@ -49,9 +57,11 @@ class StartController extends Controller
             $data['created_at'] = Carbon::now();
             $data['updated_at'] = Carbon::now();
             $this->student->update($data);
+            
             Session::put('student', $this->student);
-
+            
             return redirect()->route('step-1');
+            
         } else {
 
             $validator = Validator::make($request->all(), [
@@ -60,19 +70,18 @@ class StartController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect()->back()
-                    ->withErrors($validator);
+                return redirect()->back()->withErrors($validator);
             }
 
             $data['email'] = $request->email;
 
             if (Input::has('avatar')) {
                 $image = Student::UploadAvatar(Input::file('avatar'));
-                if ($image['status'] === true) {
+                if ($image['status'])
                     $data['avatar'] = $image['fullFileName'];
-                } else {
+                else
                     return redirect()->back()->withErrors(['image' => $image['status']]);
-                }
+
             }
 
             $this->student = Student::create($data);

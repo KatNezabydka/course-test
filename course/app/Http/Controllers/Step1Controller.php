@@ -12,22 +12,24 @@ class Step1Controller extends StartController
         parent::__construct();
     }
 
+    /**
+     * @return mixed
+     */
     public function index()
     {
-        if ($this->student->step_1) return redirect()->route('step-2');
-        else
-            return view('step-1', compact('student'));
+        return ($this->student->step_1) ? redirect()->route('step-2') : view('step-1');
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function store(Request $request)
     {
-
         $data['point'] = (int)$this->student->point + 1;
         $data['step_1'] = true;
         $this->student->update($data);
-        if ($this->student) {
-            return redirect()->route('step-2');
-        } else
-            return redirect()->back()->with('error', ['Ошибка, обратитесь к администратору']);
+        return ($this->student) ? redirect()->route('step-2') : redirect()->back()->with('error', ['Ошибка, обратитесь к администратору']);
+        
     }
 }

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 use Intervention\Image\Constraint;
 
-
 class Student extends Model
 
 {
