@@ -7,12 +7,6 @@ use Carbon\Carbon;
 
 class Step4Controller extends StartController
 {
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * @return mixed
      */
@@ -26,7 +20,7 @@ class Step4Controller extends StartController
             5 => 'Пятница',
             6 => 'Суббота',
             0 => 'Воскресенье',];
-        return ($this->student->step_4) ? redirect()->route('finish') : view('step-4', compact('weeks'));
+        return ($this->getStudent()->step_4) ? redirect()->route('finish') : view('step-4', compact('weeks'));
     }
 
     /**
@@ -37,11 +31,11 @@ class Step4Controller extends StartController
     {
         $today = Carbon::now()->dayOfWeek;
         if ($request->day == $today)
-            $data['point'] = $this->student->point + 1;
+            $data['point'] = $this->getStudent()->point + 1;
         $data['step_4'] = true;
 
-        $this->student->update($data);
-        return ($this->student) ? redirect()->route('finish') : redirect()->back()->with('error', ['Что-то пошло не так :(']);
+        $this->getStudent()->update($data);
+        return ($this->getStudent()) ? redirect()->route('finish') : redirect()->back()->with('error', ['Что-то пошло не так :(']);
         
     }
 }

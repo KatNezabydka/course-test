@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\StudentTrait;
 use App\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,13 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class StartController extends Controller
 {
-
-    protected $student;
-
-    public function __construct()
-    {
-        $this->student = Session::get('student');
-    }
+use StudentTrait;
 
     /**
      * @return mixed

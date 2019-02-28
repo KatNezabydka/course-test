@@ -10,10 +10,10 @@ class FinishController extends StartController
      */
     public function index()
     {
-        $start = $this->student->created_at;
-        $end = $this->student->updated_at;
+        $start = $this->getStudent()->created_at;
+        $end = $this->getStudent()->updated_at;
         $time = $start->diffInSeconds($end);
-        return view('finish', ['student' => $this->student, 'time' => $time]);
+        return view('finish', ['student' => $this->getStudent(), 'time' => $time]);
     }
 
 }

@@ -7,17 +7,12 @@ use Illuminate\Http\Request;
 class Step3Controller extends StartController
 {
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * @return mixed
      */
     public function index()
     {
-        return ($this->student->step_3) ? redirect()->route('step-4') : view('step-3');
+        return ($this->getStudent()->step_3) ? redirect()->route('step-4') : view('step-3');
 
     }
 
@@ -31,11 +26,11 @@ class Step3Controller extends StartController
         $count = count($request->except('_token', '_method', 'basic'));
         
         if (($count > 0) && (!$request->only('basic'))) {
-            $data['point'] = $this->student->point + 1;
+            $data['point'] = $this->getStudent()->point + 1;
         }
 
         $data['step_3'] = true;
-        $this->student->update($data);
-        return ($this->student) ? redirect()->route('step-4') : redirect()->back()->with('error', ['Что-то пошло не так :(']);
+        $this->getStudent()->update($data);
+        return ($this->getStudent()) ? redirect()->route('step-4') : redirect()->back()->with('error', ['Что-то пошло не так :(']);
     }
 }
