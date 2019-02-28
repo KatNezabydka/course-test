@@ -1,7 +1,7 @@
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 Задача реазилована 2мя способами:
-1) С помощью приватного метода и конструктора (ветка master)
+1) С помощью приватного свойства и конструктора (ветка master)
 1) С помощью использования trait (ветка trait)
 
 ## Старт
